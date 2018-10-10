@@ -12,16 +12,3 @@ pub struct Foo {
 pub struct Bar {
   value: u32,
 }
-
-#[wasm_bindgen]
-impl Foo {
-  pub fn new() -> Foo {
-    Foo {
-      bar: Bar { value: 0 },
-    }
-  }
-
-  pub fn inc(&mut self) {
-    self.bar.value = self.bar.value + 1;
-  }
-}

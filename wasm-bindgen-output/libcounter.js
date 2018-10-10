@@ -1,21 +1,6 @@
 /* tslint:disable */
 import * as wasm from './libcounter_bg';
 
-function freeBar(ptr) {
-
-    wasm.__wbg_bar_free(ptr);
-}
-/**
-*/
-export class Bar {
-
-    free() {
-        const ptr = this.ptr;
-        this.ptr = 0;
-        freeBar(ptr);
-    }
-}
-
 function freeFoo(ptr) {
 
     wasm.__wbg_foo_free(ptr);
@@ -23,14 +8,6 @@ function freeFoo(ptr) {
 /**
 */
 export class Foo {
-
-    static __wrap(ptr) {
-        const obj = Object.create(Foo.prototype);
-        obj.ptr = ptr;
-
-        return obj;
-    }
-
     /**
     * @returns {Bar}
     */
@@ -50,17 +27,20 @@ export class Foo {
         this.ptr = 0;
         freeFoo(ptr);
     }
-    /**
-    * @returns {Foo}
-    */
-    static new() {
-        return Foo.__wrap(wasm.foo_new());
-    }
-    /**
-    * @returns {void}
-    */
-    inc() {
-        return wasm.foo_inc(this.ptr);
+}
+
+function freeBar(ptr) {
+
+    wasm.__wbg_bar_free(ptr);
+}
+/**
+*/
+export class Bar {
+
+    free() {
+        const ptr = this.ptr;
+        this.ptr = 0;
+        freeBar(ptr);
     }
 }
 
